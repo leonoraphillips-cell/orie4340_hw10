@@ -400,7 +400,7 @@ def Hw9_model(MATERIAL, CAPACITY, CUSTOMER, TIME,
 
 
            print(f'\n--- {t} ---')
-         for cat in category_order:
+           for cat in category_order:
                ops_list = ops_by_day[t][cat]
                if not ops_list:
                    continue

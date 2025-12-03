@@ -40,7 +40,7 @@ def data_to_op(MATERIAL, CAPACITY, CUSTOMER, NO_LATE, TIME,
 
    OPERATIONS = set()
    BOR = set()  # set of (op, res)
-  BOP = set()  # set of (op, res)
+   BOP = set()  # set of (op, res)
    usage_param = defaultdict(float)  # usage[(op,res)]
    produce_param = defaultdict(float)  # produce[(op,res)]
    offset_param = defaultdict(int)  # offset[(op,res)]
@@ -332,9 +332,9 @@ def data_to_op(MATERIAL, CAPACITY, CUSTOMER, NO_LATE, TIME,
 
        op_move_back = f"Move_{base_r}_Studio_to_Garage"
        OPERATIONS.add(op_move_back)
-
-
-     BOR.add((op_move_back, r))
+       
+       
+       BOR.add((op_move_back, r))
        usage_param[(op_move_back, r)] += 1.0
 
 
