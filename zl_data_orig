@@ -1,0 +1,326 @@
+# Data
+MATERIAL = {
+    'LargeMMeshBed', 'LargePMeshBed', 'MediumPMeshBed', 'SmallPMeshBed',
+    'LargeMFleeceBed', 'LargePFleeceBed', 'MediumPFleeceBed', 'SmallPFleeceBed',
+    'LMFrame', 'LPFrame', 'MPFrame', 'SPFrame',
+    'LFleeceTop', 'MFleeceTop', 'SFleeceTop', 'LMeshTop', 'MMeshTop', 'SMeshTop',
+    'Mesh', 'Fleece', 'PLegs', 'Casing', '36PRods', '30PRods', '24PRods', '18PRods',
+    'Loops', 'MLegs', '36MRods', '30MRods', 'FleeceScrap', 'Pillow', 'MeshScrap', 'Bag',
+    # new bundle (finished products sold online)
+    'LargeBundle', 'MediumBundle', 'SmallBundle',
+    # supplier-level thing you buy that is converted to fabric at studio
+    'FabricBundle', 'SmallQuiltBed', 'SpoiledDogBundle', 'QTop_Small'
+}
+
+CUSTOMER = {'Store', 'Online', 'DogShow'}
+LOW_PRIORITY = {'DogShow'}      # subset of customers, low priority
+NO_LATE = {'DogShow'}           # subset of customers, can't ship late
+IS_SHIPPED = {'Store'}
+BUYSandSHIPS = {'DougTime'}
+
+CAPACITY = {'DougTime', 'JaneyTime'}
+TIME = ['3-Dec', '4-Dec', '5-Dec', '6-Dec', '7-Dec', '8-Dec']
+
+init_funds = 2000
+
+usage = {  # BOM
+    ('LargeMMeshBed', 'LMeshTop'): 1,
+    ('LargeMMeshBed', 'LMFrame'): 1,
+    ('LargeMMeshBed', 'DougTime'): 15,
+
+    ('LargePMeshBed', 'LMeshTop'): 1,
+    ('LargePMeshBed', 'LPFrame'): 1,
+    ('LargePMeshBed', 'DougTime'): 12,
+
+    ('LargeMFleeceBed', 'LFleeceTop'): 1,
+    ('LargeMFleeceBed', 'LMFrame'): 1,
+    ('LargeMFleeceBed', 'DougTime'): 15,
+
+    ('LargePFleeceBed', 'LFleeceTop'): 1,
+    ('LargePFleeceBed', 'LPFrame'): 1,
+    ('LargePFleeceBed', 'DougTime'): 12,
+
+    ('MediumPFleeceBed', 'MFleeceTop'): 1,
+    ('MediumPFleeceBed', 'MPFrame'): 1,
+    ('MediumPFleeceBed', 'DougTime'): 8,
+
+    ('MediumPMeshBed', 'MMeshTop'): 1,
+    ('MediumPMeshBed', 'MPFrame'): 1,
+    ('MediumPMeshBed', 'DougTime'): 8,
+
+    ('SmallPMeshBed', 'SMeshTop'): 1,
+    ('SmallPMeshBed', 'SPFrame'): 1,
+    ('SmallPMeshBed', 'DougTime'): 5,
+
+    ('SmallPFleeceBed', 'SFleeceTop'): 1,
+    ('SmallPFleeceBed', 'SPFrame'): 1,
+    ('SmallPFleeceBed', 'DougTime'): 5,
+
+    ('LMeshTop', 'Mesh'): 36,
+    ('LMeshTop', 'Casing'): 132,
+    ('LMeshTop', 'DougTime'): 12,
+
+    ('MMeshTop', 'Mesh'): 24,
+    ('MMeshTop', 'Casing'): 108,
+    ('MMeshTop', 'DougTime'): 8,
+
+    # fixed: 'Mesh ' -> 'Mesh'
+    ('SMeshTop', 'Mesh'): 18,
+    ('SMeshTop', 'Casing'): 84,
+    ('SMeshTop', 'DougTime'): 4,
+    ('SMeshTop', 'MeshScrap'): -1,
+
+    ('LFleeceTop', 'Fleece'): 36,
+    ('LFleeceTop', 'Casing'): 132,
+    ('LFleeceTop', 'DougTime'): 25,
+
+    ('MFleeceTop', 'Fleece'): 24,
+    ('MFleeceTop', 'Casing'): 108,
+    ('MFleeceTop', 'DougTime'): 20,
+
+    ('SFleeceTop', 'Fleece'): 18,
+    ('SFleeceTop', 'Casing'): 84,
+    ('SFleeceTop', 'DougTime'): 15,
+    ('SFleeceTop', 'FleeceScrap'): -1,
+
+    ('MPFrame', 'PLegs'): 4,
+    ('MPFrame', '24PRods'): 2,
+    ('MPFrame', '30PRods'): 2,
+
+    ('SPFrame', 'PLegs'): 4,
+    ('SPFrame', '24PRods'): 2,
+    ('SPFrame', '18PRods'): 2,
+
+    ('LPFrame', 'PLegs'): 4,
+    ('LPFrame', '36PRods'): 2,
+    ('LPFrame', '30PRods'): 2,
+
+    ('LMFrame', 'MLegs'): 4,
+    ('LMFrame', '36MRods'): 2,
+    ('LMFrame', '30MRods'): 2,
+
+    ('Pillow', 'FleeceScrap'): 1,
+    ('Pillow', 'DougTime'): 3,
+
+    ('Bag', 'MeshScrap'): 1,
+    ('Bag', 'Loops'): 1,
+    ('Bag', 'DougTime'): 3,
+
+    ('SmallBundle', 'SmallPFleeceBed'): 1,
+    ('SmallBundle', 'Bag'): 1,
+    ('SmallBundle', 'Pillow'): 1,
+
+    ('MediumBundle', 'MediumPFleeceBed'): 1,
+    ('MediumBundle', 'Bag'): 1,
+    ('MediumBundle', 'Pillow'): 1,
+
+    ('LargeBundle', 'LargePFleeceBed'): 1,
+    ('LargeBundle', 'Bag'): 1,
+    ('LargeBundle', 'Pillow'): 2,
+
+    # Small Quilt Bed (Frame + Quilted Top + Assembly Time)
+    ('SmallQuiltBed', 'SPFrame'): 1,
+    ('SmallQuiltBed', 'QTop_Small'): 1,
+    ('SmallQuiltBed', 'DougTime'): 5,
+
+    # Spoiled Dog Bundle
+    ('SpoiledDogBundle', 'SmallQuiltBed'): 1,
+    ('SpoiledDogBundle', 'Pillow'): 1,
+    ('SpoiledDogBundle', 'Bag'): 1,
+    ('SpoiledDogBundle', 'DougTime'): 1,
+}
+
+ord_cost = {
+    'Fleece': 400,
+    'Mesh': 600,
+    'Casing': 100,
+    'MLegs': 50,
+    'PLegs': 100,
+    '18PRods': 30,
+    '24PRods': 36,
+    '30PRods': 42,
+    '36PRods': 48,
+    '30MRods': 40,
+    '36MRods': 50,
+    'JaneyTime': 20,
+    'DougTime': 5,
+    'Loops': 40,
+    'FabricBundle': 200,   # 30y fleece + 30y mesh + 200y casing, delivered to studio
+}
+
+ord_qty = {
+    'Fleece': 1440,
+    'Mesh': 3600,
+    'Casing': 1800,
+    'MLegs': 25,
+    'PLegs': 60,
+    '18PRods': 25,
+    '24PRods': 25,
+    '30PRods': 25,
+    '36PRods': 25,
+    '36MRods': 5,
+    '30MRods': 5,
+    'JaneyTime': 60,
+    'DougTime': 60,
+    'Loops': 60,
+    # we explode it into yards in data_to_op
+    'FabricBundle': 1,
+}
+
+min_buy = {
+    '30MRods': 10,
+    '36MRods': 10,
+    'JaneyTime': 4,
+}
+
+max_buy = {  # 3-Dec    4-Dec  5-Dec  6-Dec  7-Dec  8-Dec
+    'JaneyTime': [0, 8, 8, 8, 8, 8],
+    'DougTime': [10, 10, 10, 10, 10, 10],
+}
+
+baseprice = {  # product price (default 0 if missing)
+    ('LargeMFleeceBed', 'Store'): 100,
+    ('LargeMFleeceBed', 'Online'): 0,
+    ('LargeMFleeceBed', 'DogShow'): 0,
+
+    ('LargePFleeceBed', 'Store'): 60,
+    ('LargePFleeceBed', 'Online'): 65,
+
+    ('LargePMeshBed', 'Store'): 50,
+    ('LargePMeshBed', 'Online'): 55,
+
+    ('LargeMMeshBed', 'Store'): 80,
+
+    ('MediumPFleeceBed', 'Store'): 50,
+    ('MediumPFleeceBed', 'Online'): 55,
+
+    ('MediumPMeshBed', 'Store'): 30,
+    ('MediumPMeshBed', 'Online'): 35,
+
+    ('SmallPFleeceBed', 'Store'): 30,
+    ('SmallPFleeceBed', 'Online'): 35,
+    ('SmallPFleeceBed', 'DogShow'): 65,
+
+    ('SmallPMeshBed', 'Store'): 20,
+    ('SmallPMeshBed', 'Online'): 25,
+    ('SmallPMeshBed', 'DogShow'): 45,
+
+    ('LFleeceTop', 'Store'): 30,
+    ('LFleeceTop', 'Online'): 25,
+
+    ('MFleeceTop', 'Store'): 25,
+    ('MFleeceTop', 'Online'): 20,
+
+    ('SFleeceTop', 'Store'): 15,
+    ('SFleeceTop', 'Online'): 15,
+    ('SFleeceTop', 'DogShow'): 40,
+
+    ('18PRods', 'Store'): 3,
+    ('24PRods', 'Store'): 4,
+    ('30PRods', 'Store'): 5,
+    ('30MRods', 'Store'): 8,
+    ('36PRods', 'Store'): 6,
+    ('36MRods', 'Store'): 12,
+    ('PLegs', 'Store'): 3,
+    ('MLegs', 'Store'): 5,
+
+    ('Pillow', 'Store'): 5,
+    ('Pillow', 'Online'): 6,
+    ('Pillow', 'DogShow'): 15,
+
+    ('Bag', 'Store'): 8,
+    ('Bag', 'Online'): 10,
+    ('Bag', 'DogShow'): 10,
+
+    ('LargeBundle', 'Online'): 80,
+    ('MediumBundle', 'Online'): 55,
+    ('SmallBundle', 'Online'): 40,
+
+    ('SmallQuiltBed', 'DogShow'): 55,
+    ('SpoiledDogBundle', 'DogShow'): 125,
+    ('QTop_Small', 'DogShow'): 30,
+}
+
+p_disc = 0.02
+
+# product demand (default 0 if not listed)
+demand = {  # 3-Dec  4-Dec  5-Dec  6-Dec  7-Dec  8-Dec
+    ('LargeMFleeceBed', 'Store'): [4, 4, 4, 4, 4, 2],
+    ('LargePFleeceBed', 'Store'): [5, 5, 5, 5, 5, 2],
+    ('LargePMeshBed', 'Store'): [6, 6, 6, 6, 6, 2],
+    ('LargeMMeshBed', 'Store'): [1, 2, 3, 4, 5, 2],
+    ('MediumPFleeceBed', 'Store'): [6, 7, 8, 9, 10, 2],
+    ('MediumPMeshBed', 'Store'): [6, 7, 8, 9, 10, 2],
+    ('SmallPFleeceBed', 'Store'): [6, 7, 8, 9, 10, 2],
+    ('SmallPMeshBed', 'Store'): [5, 6, 7, 8, 9, 2],
+    ('LFleeceTop', 'Store'): [10, 0, 0, 0, 10, 2],
+    ('MFleeceTop', 'Store'): [5, 0, 0, 0, 5, 2],
+    ('SFleeceTop', 'Store'): [8, 0, 0, 0, 8, 2],
+    ('18PRods', 'Store'): [2, 0, 0, 0, 0, 0],
+    ('24PRods', 'Store'): [4, 0, 0, 0, 0, 0],
+    ('30PRods', 'Store'): [6, 0, 0, 0, 0, 0],
+    ('30MRods', 'Store'): [8, 0, 0, 0, 0, 0],
+    ('36PRods', 'Store'): [10, 0, 0, 0, 0, 0],
+    ('36MRods', 'Store'): [5, 0, 0, 0, 0, 0],
+    ('PLegs', 'Store'): [5, 0, 0, 0, 0, 0],
+    ('MLegs', 'Store'): [10, 0, 0, 0, 0, 0],
+    ('Pillow', 'Store'): [12, 14, 15, 15, 15, 5],
+
+    ('SmallPFleeceBed', 'DogShow'): [0, 0, 0, 0, 10, 0],
+    ('SmallPMeshBed', 'DogShow'): [0, 0, 0, 0, 10, 0],
+    ('SFleeceTop', 'DogShow'): [0, 0, 0, 0, 5, 0],
+    ('Pillow', 'DogShow'): [0, 0, 0, 0, 20, 0],
+    ('Bag', 'DogShow'): [0, 0, 0, 0, 5, 0],
+
+    ('LargePFleeceBed', 'Online'): [1, 2, 3, 1, 1, 0],
+    ('LargePMeshBed', 'Online'): [2, 2, 2, 2, 3, 0],
+    ('MediumPFleeceBed', 'Online'): [3, 2, 3, 1, 2, 0],
+    ('MediumPMeshBed', 'Online'): [1, 2, 4, 1, 3, 0],
+    ('SmallPFleeceBed', 'Online'): [2, 2, 3, 2, 2, 0],
+    ('SmallPMeshBed', 'Online'): [3, 2, 2, 3, 3, 0],
+    ('LFleeceTop', 'Online'): [1, 2, 3, 4, 5, 0],
+    ('MFleeceTop', 'Online'): [2, 3, 5, 6, 6, 0],
+    ('SFleeceTop', 'Online'): [3, 2, 4, 7, 7, 0],
+    ('Pillow', 'Online'): [1, 3, 2, 2, 3, 0],
+
+    ('LargeBundle', 'Online'): [5, 0, 0, 0, 5, 0],
+    ('MediumBundle', 'Online'): [5, 0, 0, 0, 5, 0],
+    ('SmallBundle', 'Online'): [2, 0, 0, 0, 2, 0],
+
+    ('SmallQuiltBed', 'DogShow'): [0, 0, 0, 0, 10, 0],
+    ('SpoiledDogBundle', 'DogShow'): [0, 0, 0, 0, 5, 0],
+    ('QTop_Small', 'DogShow'): [0, 0, 0, 0, 5, 0],
+}
+
+supply = {
+    ('Mesh', '3-Dec'): 40 * 36,
+    ('Fleece', '3-Dec'): 80 * 36,
+    ('Casing', '3-Dec'): 200 * 36,
+
+    ('PLegs', '3-Dec'): 60,
+    ('MLegs', '3-Dec'): 32,
+
+    ('36PRods', '3-Dec'): 8,
+    ('36MRods', '3-Dec'): 12,
+    ('30PRods', '3-Dec'): 7,
+    ('30MRods', '3-Dec'): 6,
+    ('24PRods', '3-Dec'): 12,
+    ('18PRods', '3-Dec'): 10,
+    ('Loops', '3-Dec'): 10,
+}
+
+sub_usage = {
+    ('LMeshTop', 'Casing', 'Loops'): 26,
+    ('MMeshTop', 'Casing', 'Loops'): 22,
+    ('SMeshTop', 'Casing', 'Loops'): 18,
+    ('LFleeceTop', 'DougTime', 'JaneyTime'): 20,
+    ('MFleeceTop', 'DougTime', 'JaneyTime'): 15,
+    ('SFleeceTop', 'DougTime', 'JaneyTime'): 10,
+    ('LMeshTop', 'DougTime', 'JaneyTime'): 15,
+    ('MMeshTop', 'DougTime', 'JaneyTime'): 10,
+    ('SMeshTop', 'DougTime', 'JaneyTime'): 5,
+    ('Pillow', 'DougTime', 'JaneyTime'): 3,
+    ('Bag', 'DougTime', 'JaneyTime'): 3,
+}
+
+friday = TIME[2]
