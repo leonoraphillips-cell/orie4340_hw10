@@ -59,5 +59,3 @@ Examples:
 - **Spoiled Dog Bundle** production and shipping.
 
 ---
-
-## File Structure
